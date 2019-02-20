@@ -32,8 +32,9 @@ document.onkeyup = function (event) {
     var letter = event.key.toUpperCase();
 
 
-    if (letter in lettersGuessed === false) {
+    if (lettersGuessed.indexOf(" " + letter) === -1) {
         lettersGuessed.push(" " + letter);
+        console.log(letter)
         console.log(lettersGuessed)
     }
 
