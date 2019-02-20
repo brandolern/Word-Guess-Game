@@ -31,7 +31,11 @@ document.onkeyup = function (event) {
 
     var letter = event.key.toUpperCase();
 
-    lettersGuessed.push(" " + letter);
+
+    if (letter in lettersGuessed === false) {
+        lettersGuessed.push(" " + letter);
+        console.log(lettersGuessed)
+    }
 
     pageContent();
 
