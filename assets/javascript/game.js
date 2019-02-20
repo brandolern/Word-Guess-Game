@@ -1,22 +1,40 @@
 var wins = 0;
 var guessesRemaining = 13;
 var lettersGuessed = [];
+var placeholder = "_ ";
 
 var bands = ["STRING1", "STRING2", "OTHER-STRING", "LAST-STRING"];
 
-var currentBand = bands[0];
+var x = 0;
+var currentBand = bands[x];
 
 var winsText = document.getElementById("wins");
 var placeholderText = document.getElementById("placeholder");
 var guessesRemainingText = document.getElementById("guessesRemaining");
 var lettersGuessedText = document.getElementById("lettersGuessed");
 
+var pageContent = function () {
+    winsText.textContent = wins;
+    placeholderText.textContent = placeholder.repeat(currentBand.length);
+    guessesRemainingText.textContent = guessesRemaining;
+    lettersGuessedText.textContent = lettersGuessed;
+}
+
+pageContent();
+
+var changeWord = function () {
+    var x = 1;
+
+};
+
 document.onkeyup = function (event) {
 
     var letter = event.key.toUpperCase();
 
-    lettersGuessed.push(" " + letter)
-    console.log(lettersGuessed);
+    lettersGuessed.push(" " + letter);
+
+    pageContent();
+
 }
 
 
