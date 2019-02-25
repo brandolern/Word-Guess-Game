@@ -33,7 +33,7 @@ var pageContent = function () {
     winsText.textContent = wins;
     placeholderText.textContent = correctLetters.join(" ");
     guessesRemainingText.textContent = guessesRemaining;
-    lettersGuessedText.textContent = lettersGuessed;
+    lettersGuessedText.textContent = lettersGuessed.join(" ");
 }
 
 //Splits the current value of currentBand into seperate letters
@@ -69,12 +69,13 @@ document.onkeyup = function (event) {
         }
     }
 
-    if (lettersGuessed.indexOf(" " + letter) === -1) {
-        lettersGuessed.push(" " + letter);
-    }
 
-    if (bandLetters.indexOf(letter) === -1) {
+
+    if (lettersGuessed.indexOf(letter) === -1) {
         guessesRemaining--;
+    }
+    if (lettersGuessed.indexOf(letter) === -1) {
+        lettersGuessed.push(letter);
     }
 
     if (correctLetters.indexOf("_") === -1) {
