@@ -2,31 +2,37 @@
 
 //Wins, guesses, and x variables
 var wins = 0;
-var guessesRemaining = 13;
+var guessesRemaining = 12;
 var x = 0;
 
 //Arrays
-var bandLetters = [];
+var countryLetters = [];
 var lettersGuessed = [];
 var correctLetters = [];
-var bands = ["STRING1", "HELLO", "OTHER-STRING", "LAST-STRING"];
+var countries = ["AUSTRALIA", "GERMANY", "BRAZIL", "MEXICO", "MADAGASCAR", "PERU", "RUSSIA", "ITALY"];
+var pictures = ["assets/images/australia.jpg", "assets/images/germany.jpg", "assets/images/brazil.jpg", "assets/images/mexico.jpg", "assets/images/madagascar.jpg", "assets/images/peru.jpg", "assets/images/russia.jpg", "assets/images/italy.jpg"];
 
-//Selects current band that user is guessing
-var currentBand = bands[x];
+//Selects current country that user is guessing
+var currentCountry = countries[x];
 
 
-// Sets correctLetters array equal to "_", for the length of currentBand
+// Sets correctLetters array equal to "_", for the length of currentCountry
 var createPlaceholder = function () {
-    for (i = 0; i < currentBand.length; i++) {
+    for (i = 0; i < currentCountry.length; i++) {
         correctLetters[i] = "_";
     }
 }
-createPlaceholder();
+
+
+
+
 //Grabs containers from HTML
 var winsText = document.getElementById("wins");
 var placeholderText = document.getElementById("placeholder");
 var guessesRemainingText = document.getElementById("guessesRemaining");
 var lettersGuessedText = document.getElementById("lettersGuessed");
+var imageContainer = document.getElementById("imageContainer");
+var pictureCaption = document.getElementById("pictureCaption");
 
 //Displays content inside containers
 var pageContent = function () {
@@ -37,43 +43,64 @@ var pageContent = function () {
 }
 
 //Splits the current value of currentBand into seperate letters
-var splitBand = function () {
-    bandLetters = currentBand.split("");
+var splitCountry = function () {
+    countryLetters = currentCountry.split("");
 }
 
-//Change to the next band
+//Set the url for the country being guessed
+var setImage = function () {
+    var newImg = document.createElement("img");
+    newImg.setAttribute("src", pictures[x]);
+    newImg.setAttribute("class", "rounded");
+    newImg.setAttribute("id", "remove")
+    newImg.setAttribute("alt", "???")
+    imageContainer.appendChild(newImg);
+
+    if (x > 0) {
+        pictureCaption.innerHTML = "That last country was " + countries[x - 1] + "!";
+    }
+}
+
+
+//Change to the next country
 var nextWord = function () {
     x++;
-    guessesRemaining = 13;
-    currentBand = bands[x];
+    guessesRemaining = 12;
+    currentCountry = countries[x];
     lettersGuessed = [];
     correctLetters = [];
+    imageContainer.removeChild(document.getElementById("remove"));
     createPlaceholder();
-    splitBand();
+    splitCountry();
+    setImage();
 };
 
-
-splitBand();
+createPlaceholder();
+setImage();
+splitCountry();
 pageContent();
 
+//Takes users key input and tests it to see if it matches the correct word.
 document.onkeyup = function (event) {
 
     var letter = event.key.toUpperCase();
 
 
+    for (i = 0; i < countryLetters.length; i++) {
+        if (countryLetters[i] === letter) {
 
-    for (i = 0; i < bandLetters.length; i++) {
-        if (bandLetters[i] === letter) {
-
-            correctLetters[i] = bandLetters[i];
+            correctLetters[i] = countryLetters[i];
         }
     }
 
-
-
     if (lettersGuessed.indexOf(letter) === -1) {
         guessesRemaining--;
+
+        if (countryLetters.indexOf(letter) !== -1) {
+            guessesRemaining++
+        }
     }
+
     if (lettersGuessed.indexOf(letter) === -1) {
         lettersGuessed.push(letter);
     }
