@@ -18,13 +18,11 @@ var currentCountry = countries[x];
 
 // Sets correctLetters array equal to "_", for the length of currentCountry
 var createPlaceholder = function () {
+
     for (i = 0; i < currentCountry.length; i++) {
         correctLetters[i] = "_";
     }
 }
-
-
-
 
 //Grabs containers from HTML
 var winsText = document.getElementById("wins");
@@ -47,7 +45,7 @@ var splitCountry = function () {
     countryLetters = currentCountry.split("");
 }
 
-//Set the url for the country being guessed
+//Set the image for currentCountry
 var setImage = function () {
     var newImg = document.createElement("img");
     newImg.setAttribute("src", pictures[x]);
@@ -64,7 +62,15 @@ var setImage = function () {
 
 //Change to the next country
 var nextWord = function () {
-    x++;
+    x++
+
+    //Checks to see if user finished the game, resets it if they did 
+    if (x > countries.length - 1) {
+        x = 0;
+        pictureCaption.innerHTML = "You finished the game! If you missed some try giving it another go."
+        wins = 0;
+    }
+
     guessesRemaining = 12;
     currentCountry = countries[x];
     lettersGuessed = [];
@@ -74,6 +80,7 @@ var nextWord = function () {
     splitCountry();
     setImage();
 };
+
 
 createPlaceholder();
 setImage();
@@ -97,7 +104,7 @@ document.onkeyup = function (event) {
         guessesRemaining--;
 
         if (countryLetters.indexOf(letter) !== -1) {
-            guessesRemaining++
+            guessesRemaining++;
         }
     }
 
@@ -114,10 +121,6 @@ document.onkeyup = function (event) {
         nextWord();
     }
 
-
     pageContent();
 
 }
-
-
-//Create function that will switch picture and word when user loses or wins
